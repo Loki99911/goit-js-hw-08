@@ -7,20 +7,21 @@ const refs = {
   STORAGE_KEY: 'feedback-form-state',
 };
 
-getFormData();
+let objToSave = {};
 
+getFormData();
+ 
 function getFormData() {
-  const comingObj = JSON.parse(localStorage.getItem(refs.STORAGE_KEY));
-  if (comingObj) {
-    refs.input.value = comingObj.email;
-    refs.textarea.value = comingObj.message;
+  const comingString = JSON.parse(localStorage.getItem(refs.STORAGE_KEY));
+  if (comingString) {
+    objToSave = comingString;
+    refs.input.value = objToSave.email;
+    refs.textarea.value = objToSave.message;
   }
 }
 
 refs.formEl.addEventListener('input', Throttle(storFormData,500));
 refs.formEl.addEventListener('submit', onFormSubmit);
-
-const objToSave = {};
 
 function storFormData(event) {
   objToSave[event.target.name] = event.target.value;
